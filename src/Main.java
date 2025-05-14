@@ -1,16 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
 
 public class Main {
 
-    public static void createSpace(int i, int k, JFrame frame, GridBagConstraints con){
+    public static void createSpace(int i, int k, JFrame frame, GridBagConstraints con, HashMap<Integer,Integer> space){
         con.gridx = k;
         con.gridy = i;
         con.ipadx = 50;
         con.ipady = 50;
+
+        space.put(k,i);
         frame.add(new JButton(""),con);
     }
 
@@ -22,12 +24,21 @@ public class Main {
 
         JButton button = new JButton(String.format("%d",num));
         button.addActionListener(e ->{
-            int select = nums.get(num-1);
+            System.out.printf("button %d selected\n",num);
+            //return num;
         });
         frame.add(button,con);
     }
 
+    public static void enterNum(int num){
+
+    }
+
     public static void main(String[] args){
+        // lists
+        HashMap<Integer,Integer> spaces = new HashMap<>();
+        List<Integer> nums = new ArrayList<>();
+
         // creating the main frame
         JFrame mainframe = new JFrame("Sudoku");
 
@@ -41,28 +52,41 @@ public class Main {
 
         // widgets set up
         JLabel intro = new JLabel("Sudoku");
-        intro.setSize(200,100);
+
+        JButton start = new JButton("New Game");
 
         // add child widgets to parent frame
         // add label
         con.gridx = 0;
         con.gridy = 0;
-        con.ipadx = 50;
-        con.ipady = 50;
+        con.ipadx = 100;
+        con.ipady = 100;
         mainframe.add(intro,con);
 
-        // add empty spaces
-        for(int i = 1; i <= 9; i++){
-            for(int k = 1; k <= 9; k++){
-                createSpace(i,k,mainframe,con);
-        }}
+        // add start button
+        con.gridx = 0;
+        con.gridy = 1;
+        con.ipadx = 100;
+        con.ipady = 50;
+        mainframe.add(start,con);
 
-        List<Integer> nums = new ArrayList<>();
-        // add number selection buttons
-        for(int i = 1; i <= 9; i++){
-            nums.add(i);
-            createNumButton(i,mainframe,con,nums);
-        }
+        // event listener for start button
+        start.addActionListener(e -> {
+            intro.setVisible(false);
+            start.setEnabled(false);
+            start.setVisible(false);
+            // add empty spaces
+            for(int i = 1; i <= 9; i++){
+                for(int k = 1; k <= 9; k++){
+                    createSpace(i,k,mainframe,con,spaces);
+                }
+            }
+            // add number selection buttons
+            for(int i = 1; i <= 9; i++){
+                nums.add(i);
+                createNumButton(i,mainframe,con,nums);
+            }
+        });
 
         // set the display
         mainframe.pack();
