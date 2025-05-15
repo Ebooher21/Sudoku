@@ -23,16 +23,33 @@ public class Main {
     public static void createSpace(int i, int k, JFrame frame, GridBagConstraints pin, List<JButton> space){
         pin.gridx = k;
         pin.gridy = i;
-        pin.ipadx = 50;
-        pin.ipady = 50;
+        //pin.ipadx = 50;
+        //pin.ipady = 70;
 
-        JButton button = new JButton(" ");
+        JButton button = new JButton();
+
         space.add(button);
         frame.add(button,pin);
+
+        // set size
+        Dimension size = new Dimension(80,80);
+        button.setPreferredSize(size);
+        button.setMinimumSize(size);
+        button.setMaximumSize(size);
+        // removes box around button text
+        button.setFocusPainted(false);
+        // makes button background transparent
+        button.setBackground(new Color(255,0,0,0));
+        // removes opaque background when the button is hovered
+        button.setOpaque(false);
+
         button.addActionListener(event -> {
             System.out.printf("x: %d, y: %d\n",k,i);
-            String numtext = Integer.toString(select);
-            button.setText(numtext);
+            if(select == null){} // does nothing
+            else{
+                String numtext = Integer.toString(select);
+                button.setText(numtext);
+            }
         });
     }
 
@@ -40,11 +57,21 @@ public class Main {
     public static void createNumButton(int num, JFrame frame, GridBagConstraints n, List<Integer> nums){
         n.gridx = num;
         n.gridy = 10;
-        n.ipadx = 50;
-        n.ipady = 50;
+        n.ipadx = 0;
+        n.ipady = 0;
 
         JButton button = new JButton(String.format("%d",num));
         frame.add(button,n);
+
+        // makes button background transparent
+        button.setBackground(new Color(255,0,0,0));
+        // removes opaque background when the button is hovered
+        button.setOpaque(false);
+        // removes button border
+        button.setBorderPainted(false);
+        // removes button text border
+        button.setFocusPainted(false);
+
         button.addActionListener(e ->{
             System.out.printf("button %d clicked\n",num);
             setNum(num);
@@ -96,7 +123,7 @@ public class Main {
 
             // layout constraints for empty spaces
             GridBagConstraints pin = new GridBagConstraints();
-            pin.insets = new Insets(2,2,2,2);
+            pin.insets = new Insets(0,0,0,0);
 
             // add empty spaces
             for(int i = 1; i <= 9; i++){
@@ -119,7 +146,7 @@ public class Main {
 
         // set the display
         mainframe.pack();
-        mainframe.setMinimumSize(new Dimension(800,600));
+        mainframe.setMinimumSize(new Dimension(1000,900));
         mainframe.setLocationRelativeTo(null); // centers the frame
         mainframe.setVisible(true);
     }
