@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 public class Main {
     // global variable
@@ -76,6 +77,21 @@ public class Main {
             System.out.printf("button %d clicked\n",num);
             setNum(num);
         });
+    }
+
+    public static void generate(){
+        Random random = new Random();
+        List<Integer> nums = new ArrayList<>();
+        for(int i = 1; i < 10; i++){
+            int space = random.nextInt(1,10);
+            //check list for space
+            //if contains, generate new num
+
+            //either that or create a list 1-9 and select from it at random
+            //remove the selected number from the list so no checks
+            //only check would be length of the list
+
+        }
     }
 
     public static void main(String[] args){
