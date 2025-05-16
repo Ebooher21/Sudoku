@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
     // global variable
@@ -81,16 +79,19 @@ public class Main {
 
     public static void generate(){
         Random random = new Random();
-        List<Integer> nums = new ArrayList<>();
-        for(int i = 1; i < 10; i++){
-            int space = random.nextInt(1,10);
-            //check list for space
-            //if contains, generate new num
-
-            //either that or create a list 1-9 and select from it at random
-            //remove the selected number from the list so no checks
-            //only check would be length of the list
-
+        int[][][] order = new int[9][3][3];
+        for(int i = 0; i <= 8; i++){
+            List<Integer> nums = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+            for(int j = 0; j <= 2; j++){
+                for(int k = 0; k <= 2; k++){
+                    // select a number 1-9 from the list nums at random
+                    int num = random.nextInt(0, nums.size());
+                    // add to list of 2D Arrays
+                    order[i][j][k] = nums.get(num);
+                    // remove the selected number from the list
+                    nums.remove(num);
+                }
+            }
         }
     }
 
