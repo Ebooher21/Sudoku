@@ -78,24 +78,70 @@ public class Main {
     }
 
     public static void generate(){
+
         Random random = new Random();
         int[][][] order = new int[9][3][3];
-        for(int i = 0; i <= 8; i++){
+
+        for(int i = 0; i <= 8; i++){ // each 3x3 grid
             List<Integer> nums = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
-            for(int j = 0; j <= 2; j++){
-                for(int k = 0; k <= 2; k++){
+            for(int j = 0; j <= 2; j++){ // y
+                for(int k = 0; k <= 2; k++){ // x
                     // select a number 1-9 from the list nums at random
                     int num = random.nextInt(0, nums.size());
-                    // add to list of 2D Arrays
-                    order[i][j][k] = nums.get(num);
-                    // remove the selected number from the list
-                    nums.remove(num);
+
+                    if(i == 0){ // base case for grid 1
+                        order[i][j][k] = nums.get(num); // add to list of 2D Arrays
+                        nums.remove(num); // remove the selected number from the list
+                    }
+
+                    else if(i == 1){ // for grid 2
+                        for(int n = 0; n <= 2; n++){
+                           for(int l = 0; l <= 2; l++){
+                               if(order[0][n][l] == nums.get(num)){
+                                   break;
+                               }else if(l == 2){
+                                   if(order[i][j][l-2] == 0)
+                                    order[i][n][l-2] = nums.get(num);
+                                   else if(order[i][j][l-1] == 1){
+                                       order[i][j][l-1] = nums.get(num);
+                                   }else{order[i][j][l] = nums.get(num);}
+                               }
+                           }
+                        }
+                    }
+
+                    else if(i == 2){ // for grid 3
+                        for(int s = 0; s < 2; s++) {
+                            for (int n = 0; n < 2; n++) {
+                                for (int l = 0; l <= 2; l++) {
+
+                                }
+                                if (nums.get(num) == order[0][j][n] ||
+                                        nums.get(num) == order[1][j][n]) {
+                                    if (nums.get(num) == order[0][j + 1][n] ||
+                                            nums.get(num) == order[1][j + 1][n]) {
+                                        order[i][j + 2][n] = nums.get(num);
+                                        nums.remove(num);
+                                    } else {
+                                        order[i][j + 1][n] = nums.get(num);
+                                        nums.remove(num);
+                                    }
+                                } else {
+                                    order[i][j][n] = nums.get(num);
+                                    nums.remove(num);
+                                }
+                            }
+                        }
+                    } else{ // for grids 4 - 9
+
+                    }
                 }
             }
         }
     }
 
     public static void main(String[] args){
+        generate();
         // lists
         HashMap<Integer,Integer> location = new HashMap<>(); // x,y coordinates
         List<JButton> space = new ArrayList<>(); // buttons
