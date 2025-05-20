@@ -1,0 +1,103 @@
+else if(i == 1){ // for grid 2
+                        nums.remove(order[0][j][0]);
+                        nums.remove(order[0][j][1]);
+                        nums.remove(order[0][j][2]);
+                        order[i][j][k] = num;
+                    } else if(i == 2){ // for grid 3
+                        for (int y = 0; y <= 2; y++) {
+                                if(num != order[0][y][0] && num != order[0][y][1] &&
+                                        num != order[0][y][2] && num != order[1][y][0] &&
+                                        num != order[1][y][1] && num != order[1][y][2]){
+                                        if(order[i][j][k] == 0){
+                                            order[i][j][k] = num;
+                                            nums.remove(ranint);
+                                            break;
+                                        }
+                                }
+                        }
+                    } else if(i==3){ // for grid 4
+                        outer:
+                        for(int y = 0; y <=2; y++){
+                            for(int x = 0; x<=2; x++){
+                                if(num != order[0][0][x] &&
+                                        num != order[0][1][x] &&
+                                        num != order[0][2][x]){
+                                    order[i][y][x] = num;
+                                    nums.remove(ranint);
+                                    break outer;
+                                }
+                            }
+                        }
+                    } else if(i==4){ // for grid 5
+                        outer:
+                        for(int y = 0; y <= 2; y++){
+                            for(int x = 0; x<= 2; x++){
+                                if(num != order[3][y][0] && num != order[3][y][1] &&
+                                        num != order[3][y][2] && num != order[1][0][x] &&
+                                        num != order[1][1][x] && num != order[1][2][x]){
+                                    order[i][y][x] = num;
+                                    nums.remove(ranint);
+                                    break outer;
+                                }
+                            }
+                        }
+                    } else if(i==5){ // for grid 6
+                        outer:
+                        for(int y = 0; y <= 2; y++){
+                            for(int x = 0; x<= 2; x++){
+                                if(num != order[3][y][0] && num != order[3][y][1] &&
+                                        num != order[3][y][2] && num != order[4][y][0] &&
+                                        num != order[4][y][1] && num != order[4][y][2] &&
+                                        num != order[2][0][x] && num != order[2][1][x] &&
+                                        num != order[2][2][x]){
+                                    order[i][y][x] = num;
+                                    nums.remove(ranint);
+                                    break outer;
+                                }
+                            }
+                        }
+                    } else if(i==6){ // for grid 7
+                        outer:
+                        for(int y = 0; y <= 2; y++){
+                            for(int x = 0; x<= 2; x++){
+                                if(num != order[0][0][x] && num != order[0][1][x] &&
+                                        num != order[0][2][x] && num != order[3][0][x] &&
+                                        num != order[3][1][x] && num != order[3][2][x]){
+                                    order[i][y][x] = num;
+                                    nums.remove(ranint);
+                                    break outer;
+                                }
+                            }
+                        }
+                    } else if(i==7){ // for grid 8
+                        outer:
+                        for(int y = 0; y <= 2; y++){
+                            for(int x = 0; x<= 2; x++){
+                                if(num != order[6][y][0] && num != order[6][y][1] &&
+                                        num != order[6][y][2] && num != order[1][0][x] &&
+                                        num != order[1][1][x] && num != order[1][2][x] &&
+                                        num != order[4][0][x] && num != order[4][1][x] &&
+                                        num != order[4][2][x]){
+                                    order[i][y][x] = num;
+                                    nums.remove(ranint);
+                                    break outer;
+                                }
+                            }
+                        }
+                    } else{ // for grid 9
+                        outer:
+                        for(int y = 0; y <= 2; y++){
+                            for(int x = 0; x<= 2; x++){
+                                if(num != order[6][y][0] && num != order[6][y][1] &&
+                                        num != order[6][y][2] && num != order[7][y][0] &&
+                                        num != order[7][y][1] && num != order[7][y][2] &&
+                                        num != order[2][0][x] && num != order[2][1][x] &&
+                                        num != order[2][2][x] && num != order[5][0][x] &&
+                                        num != order[5][1][x] && num != order[5][2][x]){
+                                    order[i][y][x] = num;
+                                    nums.remove(ranint);
+                                    break outer;
+                                }
+                            }
+                        }
+                    }

@@ -86,117 +86,128 @@ public class Main {
             List<Integer> nums = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
             for(int j = 0; j <= 2; j++){ // y
                 for(int k = 0; k <= 2; k++){ // x
-                    // select a number 1-9 from the list nums at random
-                    int ranint = random.nextInt(0,nums.size());
-                    int num = nums.get(ranint);
 
                     if(i == 0){ // base case for grid 1
+
+                        // select a number 1-9 from the list nums at random
+                        int ranint = random.nextInt(nums.size());
+                        int num = nums.get(ranint);
+
                         order[i][j][k] = num; // add to list of 2D Arrays
                         nums.remove(ranint); // remove the selected number from the list
-                    }
-                    else if(i == 1){ // for grid 2
-                        for(int  y= 0; y <= 2; y++){
-                            if (order[0][y][0] != num && order[0][y][1] != num && order[0][y][2] != num) {
-                                if(order[i][y][k] == 0) {
+
+                    }else if(i==1){
+                        outer:
+                        for(int n = 0; n <= 8; n++){
+                            int ranint = random.nextInt(nums.size());
+                            int num = nums.get(ranint);
+                            if(n == 8){
+                                if(num == order[0][j][0] || num == order[0][j][1] ||
+                                        num == order[0][j][2]){
+                                    for(int b = 2; b >= 0; b--){
+                                        if(order[i][j-1][b] != order[0][j][0] &&
+                                                order[i][j-1][b] != order[0][j][1] &&
+                                                order[i][j-1][b] != order[0][j][2])
+                                        {
+                                            if(num != order[0][j-1][0] &&
+                                                    num != order[0][j-1][1] &&
+                                                    num != order[0][j-1][2])
+                                            {
+                                                order[i][j][k] = order[i][j-1][b];
+                                                order[i][j-1][b] = num;
+                                                break outer;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if(num != order[0][j][0] &&
+                                    num != order[0][j][1] &&
+                                    num != order[0][j][2])
+                            {
+                                if(order[i][j][k] == 0){
                                     order[i][j][k] = num;
                                     nums.remove(ranint);
                                     break;
                                 }
                             }
                         }
-                    } else if(i == 2){ // for grid 3
-                        for (int y = 0; y <= 2; y++) {
-                                if(num != order[0][y][0] && num != order[0][y][1] &&
-                                        num != order[0][y][2] && num != order[1][y][0] &&
-                                        num != order[1][y][1] && num != order[1][y][2]){
-                                        order[i][j][k] = num;
-                                        nums.remove(ranint);
-                                        break;
-                                }
-                        }
-                    } else if(i==3){ // for grid 4
+                    } else if(i == 2){
+                        boolean rowcheck = false;
                         outer:
-                        for(int y = 0; y <=2; y++){
-                            for(int x = 0; x<=2; x++){
-                                if(num != order[0][0][x] &&
-                                        num != order[0][1][x] &&
-                                        num != order[0][2][x]){
-                                    order[i][y][x] = num;
+                        for(int n = 0; n <= 8; n++){
+                            int ranint = random.nextInt(0,nums.size());
+                            int num = nums.get(ranint);
+                            if(rowcheck){
+                                n -= 1;
+                            }
+                            if(num == order[0][j][0] || num == order[0][j][1] ||
+                                    num == order[0][j][2] || num == order[1][j][0] ||
+                                    num == order[1][j][1] || num == order[1][j][2])
+                            {
+                                if(j == 0){
+                                    rowcheck = true;
+                                    continue;
+                                }
+                                for(int b = 2; b >= 0; b--){
+                                    if(order[i][j-1][b] != order[0][j][0] &&
+                                            order[i][j-1][b] != order[0][j][1] &&
+                                            order[i][j-1][b] != order[0][j][2] &&
+                                            order[i][j-1][b] != order[1][j][0] &&
+                                            order[i][j-1][b] != order[1][j][1] &&
+                                            order[i][j-1][b] != order[1][j][2])
+                                    {
+                                        if(num != order[0][j-1][0] && num != order[0][j-1][1] &&
+                                                num != order[0][j-1][2] && num != order[1][j-1][0] &&
+                                                num != order[1][j-1][1] && num != order[1][j-1][2])
+                                        {
+                                            order[i][j][k] = order[i][j-1][b];
+                                            order[i][j-1][b] = num;
+                                            break outer;
+                                        }
+                                    }
+                                }
+                            }
+                            if(num != order[0][j][0] && num != order[0][j][1] &&
+                                    num != order[0][j][2] && num != order[1][j][0] &&
+                                    num != order[1][j][1] && num != order[1][j][2])
+                            {
+                                if(order[i][j][k] == 0){
+                                    order[i][j][k] = num;
                                     nums.remove(ranint);
-                                    break outer;
+                                    break;
                                 }
                             }
                         }
-                    } else if(i==4){ // for grid 5
+                    } else if(i==3){
                         outer:
-                        for(int y = 0; y <= 2; y++){
-                            for(int x = 0; x<= 2; x++){
-                                if(num != order[3][y][0] && num != order[3][y][1] &&
-                                        num != order[3][y][2] && num != order[1][0][x] &&
-                                        num != order[1][1][x] && num != order[1][2][x]){
-                                    order[i][y][x] = num;
-                                    nums.remove(ranint);
-                                    break outer;
+                        for(int n = 0; n <=8; n++){
+                            int ranint = random.nextInt(0,nums.size());
+                            int num = nums.get(ranint);
+                            if(n==8){
+                                if(num == order[0][0][k] || num == order[0][1][k] ||
+                                        num == order[0][2][k]){
+                                    for(int b = 2; b >= 0; b--){
+                                        if(order[i][b][k-1] != order[0][0][k] &&
+                                                order[i][b][k-1] != order[0][1][k] &&
+                                                order[i][b][k-1] != order[0][2][k])
+                                        {
+                                            if(num != order[0][j-1][0] &&
+                                                    num != order[0][j-1][1] &&
+                                                    num != order[0][j-1][2])
+                                            {
+                                                order[i][j][k] = order[i][j-1][b];
+                                                order[i][j-1][b] = num;
+                                                break outer;
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    } else if(i==5){ // for grid 6
-                        outer:
-                        for(int y = 0; y <= 2; y++){
-                            for(int x = 0; x<= 2; x++){
-                                if(num != order[3][y][0] && num != order[3][y][1] &&
-                                        num != order[3][y][2] && num != order[4][y][0] &&
-                                        num != order[4][y][1] && num != order[4][y][2] &&
-                                        num != order[2][0][x] && num != order[2][1][x] &&
-                                        num != order[2][2][x]){
-                                    order[i][y][x] = num;
-                                    nums.remove(ranint);
-                                    break outer;
-                                }
-                            }
-                        }
-                    } else if(i==6){ // for grid 7
-                        outer:
-                        for(int y = 0; y <= 2; y++){
-                            for(int x = 0; x<= 2; x++){
-                                if(num != order[0][0][x] && num != order[0][1][x] &&
-                                        num != order[0][2][x] && num != order[3][0][x] &&
-                                        num != order[3][1][x] && num != order[3][2][x]){
-                                    order[i][y][x] = num;
-                                    nums.remove(ranint);
-                                    break outer;
-                                }
-                            }
-                        }
-                    } else if(i==7){ // for grid 8
-                        outer:
-                        for(int y = 0; y <= 2; y++){
-                            for(int x = 0; x<= 2; x++){
-                                if(num != order[6][y][0] && num != order[6][y][1] &&
-                                        num != order[6][y][2] && num != order[1][0][x] &&
-                                        num != order[1][1][x] && num != order[1][2][x] &&
-                                        num != order[4][0][x] && num != order[4][1][x] &&
-                                        num != order[4][2][x]){
-                                    order[i][y][x] = num;
-                                    nums.remove(ranint);
-                                    break outer;
-                                }
-                            }
-                        }
-                    } else{ // for grid 9
-                        outer:
-                        for(int y = 0; y <= 2; y++){
-                            for(int x = 0; x<= 2; x++){
-                                if(num != order[6][y][0] && num != order[6][y][1] &&
-                                        num != order[6][y][2] && num != order[7][y][0] &&
-                                        num != order[7][y][1] && num != order[7][y][2] &&
-                                        num != order[2][0][x] && num != order[2][1][x] &&
-                                        num != order[2][2][x] && num != order[5][0][x] &&
-                                        num != order[5][1][x] && num != order[5][2][x]){
-                                    order[i][y][x] = num;
-                                    nums.remove(ranint);
-                                    break outer;
-                                }
+                            if(num != order[0][0][k] && num != order[0][1][k] && num != order[0][2][k]){
+                                order[i][j][k] = num;
+                                nums.remove(ranint);
+                                break;
                             }
                         }
                     }
@@ -206,7 +217,7 @@ public class Main {
         for(int z = 0; z <= 8; z++){
             for(int y = 0; y <= 2; y++){
                 for(int x = 0; x <= 2; x++){
-                    System.out.printf("%d", order[z][x][y]);
+                    System.out.printf("%d", order[z][y][x]);
                 }
                 System.out.println("\n");
             }
