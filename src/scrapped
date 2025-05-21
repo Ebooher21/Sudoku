@@ -101,3 +101,52 @@ else if(i == 1){ // for grid 2
                             }
                         }
                     }
+
+
+
+
+else if(i==4){
+                        boolean check = false;
+                        outer:
+                        for(int n = 0; n <= 8; n++){
+                            int ranint = random.nextInt(0,nums.size());
+                            int num = nums.get(ranint);
+                            if(check){
+                                n -= 1;
+                            }
+                            if(n==8){
+                                if(num == order[1][0][k] || num == order[1][1][k] || num == order[1][2][k] || num == order[3][j][0] || num == order[3][j][1] || num == order[3][j][2]){
+                                    if(j==0 || k==0){
+                                        check = true;
+                                        continue;
+                                    }
+                                    for(int b = 2; b >= 0; b--){
+                                        if(order[i][j-1][b] != order[1][0][k] &&
+                                                order[i][j-1][b] != order[1][1][k] &&
+                                                order[i][j-1][b] != order[1][2][k] &&
+                                                order[i][j-1][b] != order[3][j][0] &&
+                                                order[i][j-1][b] != order[3][j][1] &&
+                                                order[i][j-1][b] != order[3][j][2])
+                                        {
+                                            if(num != order[1][0][k-1] && num != order[1][1][k-1] &&
+                                                    num != order[1][2][k-1] && num != order[3][j-1][0] &&
+                                                    num != order[3][j-1][1] && num != order[3][j-1][2])
+                                            {
+                                                order[i][j][k] = order[i][j-1][b];
+                                                order[i][j-1][b] = num;
+                                                break outer;
+                                            }
+                                        }else if(order[i][b][k-1] != order[1][0][k] &&
+                                                order[i][b][k-1] != order[1][1][k] &&
+                                                order[i][b][k-1] != order[1][2][k] &&
+                                                order[i][b][k-1] != order[3][j][0] &&
+                                                order[i][b][k-1] != order[3][j][1] &&
+                                                order[i][b][k-1] != order[3][j][2]){
+                                            if(num != order[1][0][k-1] && num != order[1][1][k-1] &&
+                                                    num != order[1][2][k-1] && num != order[3][j-1][0] &&
+                                                    num != order[3][j-1][1] && num != order[3][j-1][2])
+                                            {
+                                                order[i][j][k] = order[i][b][k-1];
+                                                order[i][b][k-1] = num;
+                                                break outer;
+                                            }

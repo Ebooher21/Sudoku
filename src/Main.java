@@ -90,7 +90,7 @@ public class Main {
                     if(i == 0){ // base case for grid 1
 
                         // select a number 1-9 from the list nums at random
-                        int ranint = random.nextInt(nums.size());
+                        int ranint = random.nextInt(0,nums.size());
                         int num = nums.get(ranint);
 
                         order[i][j][k] = num; // add to list of 2D Arrays
@@ -99,7 +99,7 @@ public class Main {
                     }else if(i==1){
                         outer:
                         for(int n = 0; n <= 8; n++){
-                            int ranint = random.nextInt(nums.size());
+                            int ranint = random.nextInt(0,nums.size());
                             int num = nums.get(ranint);
                             if(n == 8){
                                 if(num == order[0][j][0] || num == order[0][j][1] ||
@@ -133,20 +133,21 @@ public class Main {
                             }
                         }
                     } else if(i == 2){
-                        boolean rowcheck = false;
+                        boolean check = false;
                         outer:
                         for(int n = 0; n <= 8; n++){
                             int ranint = random.nextInt(0,nums.size());
                             int num = nums.get(ranint);
-                            if(rowcheck){
+                            if(check){
                                 n -= 1;
+                                check = false;
                             }
                             if(num == order[0][j][0] || num == order[0][j][1] ||
                                     num == order[0][j][2] || num == order[1][j][0] ||
                                     num == order[1][j][1] || num == order[1][j][2])
                             {
                                 if(j == 0){
-                                    rowcheck = true;
+                                    check = true;
                                     continue;
                                 }
                                 for(int b = 2; b >= 0; b--){
@@ -163,6 +164,7 @@ public class Main {
                                         {
                                             order[i][j][k] = order[i][j-1][b];
                                             order[i][j-1][b] = num;
+                                            nums.remove(num);
                                             break outer;
                                         }
                                     }
@@ -180,35 +182,76 @@ public class Main {
                             }
                         }
                     } else if(i==3){
+                        boolean check = false;
                         outer:
-                        for(int n = 0; n <=8; n++){
+                        for(int n = 0; n <= 8; n++){
                             int ranint = random.nextInt(0,nums.size());
                             int num = nums.get(ranint);
-                            if(n==8){
-                                if(num == order[0][0][k] || num == order[0][1][k] ||
-                                        num == order[0][2][k]){
-                                    for(int b = 2; b >= 0; b--){
-                                        if(order[i][b][k-1] != order[0][0][k] &&
-                                                order[i][b][k-1] != order[0][1][k] &&
-                                                order[i][b][k-1] != order[0][2][k])
-                                        {
-                                            if(num != order[0][j-1][0] &&
-                                                    num != order[0][j-1][1] &&
-                                                    num != order[0][j-1][2])
-                                            {
-                                                order[i][j][k] = order[i][j-1][b];
-                                                order[i][j-1][b] = num;
-                                                break outer;
-                                            }
-                                        }
-                                    }
-                                }
+                            if(check){
+                                n -= 1;
+                                check = false;
                             }
                             if(num != order[0][0][k] && num != order[0][1][k] && num != order[0][2][k]){
                                 order[i][j][k] = num;
                                 nums.remove(ranint);
                                 break;
+                            }else{
+                                if(k == 0){
+                                    check = true;
+                                    continue;
+                                }
+                                for(int b = 2; b >= 0; b--){
+                                    if(order[i][b][k-1] != order[0][0][k] &&
+                                            order[i][b][k-1] != order[0][1][k] &&
+                                            order[i][b][k-1] != order[0][2][k])
+                                    {
+                                        if(num != order[0][0][k-1] &&
+                                                num != order[0][1][k-1] &&
+                                                num != order[0][2][k-1])
+                                        {
+                                            order[i][j][k] = order[i][b][k-1];
+                                            order[i][b][k-1] = num;
+                                            break outer;
+                                        }
+                                    }
+                                }
                             }
+                        }
+                    }else if(i==4){
+                        boolean check = false;
+                        outer:
+                        for(int n = 0; n <= 8; n++){
+                            int ranint = random.nextInt(0,nums.size());
+                            int num = nums.get(ranint);
+
+                            if(num != order[1][0][k] && num != order[1][1][k] &&
+                                    num != order[1][2][k] && num != order[3][j][0] &&
+                                    num != order[3][j][1] && num != order[3][j][2]){
+                                order[i][j][k] = num;
+                                nums.remove(ranint);
+                                break;
+                            }else{
+                                for(int b = 2; b >= 0; b--){
+                                    for(int t=2; t>=0; t--){
+                                        if(order[i][b][t] != 0 && order[i][b][t] != order[1][0][k] && order[i][b][t] != order[1][1][k] &&
+                                                order[i][b][t] != order[1][2][k] && order[i][b][t] != order[3][j][0] &&
+                                                order[i][b][t] != order[3][j][1] && order[i][b][t] != order[3][j][2])
+                                        {
+                                            if(num != order[1][0][t] && num != order[1][1][t] &&
+                                                    num != order[1][2][t] && num != order[3][b][0] &&
+                                                    num != order[3][b][1] && num != order[3][b][2])
+                                            {
+                                                order[i][j][k] = order[i][b][t];
+                                                order[i][b][t] = num;
+                                                nums.remove(ranint);
+                                                break outer;
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+
                         }
                     }
                 }
