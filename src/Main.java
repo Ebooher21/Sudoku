@@ -82,7 +82,7 @@ public class Main {
         Random random = new Random();
         int[][][] order = new int[9][3][3];
 
-        for(int i = 0; i <= 8; i++){ // each 3x3 grid
+        for(int i = 0; i <= 9; i++){ // each 3x3 grid
             List<Integer> nums = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
             for(int j = 0; j <= 2; j++){ // y
                 for(int k = 0; k <= 2; k++){ // x
@@ -268,6 +268,7 @@ public class Main {
                         for(int n = 0; n <= 8; n++){
                             int ranint = random.nextInt(0,nums.size());
                             int num = nums.get(ranint);
+
                             if(num == order[3][j][0] || num == order[3][j][1] ||
                                     num == order[3][j][2] || num == order[4][j][0] ||
                                     num == order[4][j][1] || num == order[4][j][2] ||
@@ -275,19 +276,17 @@ public class Main {
                                     num == order[2][2][k])
                             {
                                 for(int b = 2; b >= 0; b--){
-                                    for(int t = 2; t >= 0; t--){
-                                        if(order[i][b][t] != 0 && order[i][b][t] != order[3][j][0] &&
-                                                order[i][b][t] != order[3][j][1] && order[i][b][t] != order[3][j][2] &&
-                                                order[i][b][t] != order[4][j][0] && order[i][b][t] != order[4][j][1] &&
-                                                order[i][b][t] != order[4][j][2] && order[i][b][t] != order[2][0][k] &&
-                                                order[i][b][t] != order[2][1][k] && order[i][b][t] != order[2][2][k])
-                                        {
-                                            if(order[i][j][k] == 0 && num != order[3][b][0] &&
-                                                    num != order[3][b][1] && num != order[3][b][2] &&
-                                                    num != order[4][b][0] && num != order[4][b][1] &&
-                                                    num != order[4][b][2] && num != order[2][0][t] &&
-                                                    num != order[2][1][t] && num != order[2][2][t])
-                                            {
+                                    for(int t = 2; t >= 0;t--){
+                                        if(order[i][b][t] != 0 && order[i][b][t] != order[3][j][0] && order[i][b][t] != order[3][j][1] &&
+                                                order[i][b][t] != order[3][j][2] && order[i][b][t] != order[4][j][0] &&
+                                                order[i][b][t] != order[4][j][1] && order[i][b][t] != order[4][j][2] &&
+                                                order[i][b][t] != order[2][0][k] && order[i][b][t] != order[2][1][k] &&
+                                                order[i][b][t] != order[2][2][k]){
+                                            if(num != order[3][b][0] && num != order[3][b][1] &&
+                                                    num != order[3][b][2] && num != order[4][b][0] &&
+                                                    num != order[4][b][1] && num != order[4][b][2] &&
+                                                    num != order[2][0][t] && num != order[2][1][t] &&
+                                                    num != order[2][2][t]){
                                                 order[i][j][k] = order[i][b][t];
                                                 order[i][b][t] = num;
                                                 nums.remove(ranint);
@@ -295,6 +294,7 @@ public class Main {
                                             }
                                         }
                                     }
+
                                 }
                             }
                             if(order[i][j][k] == 0 && num != order[3][j][0] &&
@@ -308,6 +308,17 @@ public class Main {
                                 break;
 
                             }
+                        }
+                        if(j==2 && k==2 && !nums.isEmpty()){
+                            for(int b = 2; b >= 0; b--){
+                                for(int t = 2; t >= 0;t--){
+                                    if(order[i][b][t] == 0){
+                                        order[i][b][t] = nums.getLast();
+                                    }
+                                }
+                            }
+                        }else if(i==6){
+                            
                         }
                     }
                 }
