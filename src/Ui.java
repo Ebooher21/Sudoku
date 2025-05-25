@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Ui extends JFrame{
 
@@ -11,10 +8,6 @@ public class Ui extends JFrame{
     }
 
     public Ui(){
-        // lists
-        HashMap<Integer,Integer> location = new HashMap<>(); // x,y coordinates
-        java.util.List<JButton> space = new ArrayList<>(); // buttons
-        List<Integer> nums = new ArrayList<>(); // numbers choices
 
         // creating the main frame
         JFrame mainframe = new JFrame("Sudoku");
@@ -29,7 +22,6 @@ public class Ui extends JFrame{
 
         // widgets set up
         JLabel intro = new JLabel("Sudoku");
-
         JButton start = new JButton("New Game");
 
         // add child widgets to parent frame
@@ -52,14 +44,7 @@ public class Ui extends JFrame{
             intro.setVisible(false);
             start.setEnabled(false);
             start.setVisible(false);
-
-            // layout constraints for empty spaces
-            GridBagConstraints pin = new GridBagConstraints();
-            pin.insets = new Insets(0,0,0,0);
-
-            // layout constraints for number buttons
-            GridBagConstraints n = new GridBagConstraints();
-            n.insets = new Insets(30,5,5,5);
+            //Difficulty(mainframe);
 
         });
 

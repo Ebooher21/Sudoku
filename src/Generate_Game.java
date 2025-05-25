@@ -1,14 +1,23 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Generate_Game {
 
+    // global variable
+    public static Integer select;
+
+    // changes the user selected number
+    public static void setNum(int num){
+        select = num;
+        System.out.println("setNum was called");
+    }
+
     public static void createSpace(int i, int k, JFrame frame, GridBagConstraints pin, java.util.List<JButton> space){
         pin.gridx = k;
         pin.gridy = i;
-        //pin.ipadx = 50;
-        //pin.ipady = 70;
 
         JButton button = new JButton();
 
@@ -20,10 +29,13 @@ public class Generate_Game {
         button.setPreferredSize(size);
         button.setMinimumSize(size);
         button.setMaximumSize(size);
+
         // removes box around button text
         button.setFocusPainted(false);
+
         // makes button background transparent
         button.setBackground(new Color(255,0,0,0));
+
         // removes opaque background when the button is hovered
         button.setOpaque(false);
 
@@ -62,19 +74,34 @@ public class Generate_Game {
         });
     }
 
-    public Generate_Game(){
+    public Generate_Game(){}
+
+    public Generate_Game(String Difficulty, JFrame frame){
+        // lists
+        HashMap<Integer,Integer> location = new HashMap<>(); // x,y coordinates
+        java.util.List<JButton> space = new ArrayList<>(); // buttons
+        List<Integer> nums = new ArrayList<>(); // numbers choices
+
+        // layout constraints for empty spaces
+        GridBagConstraints pin = new GridBagConstraints();
+        pin.insets = new Insets(0,0,0,0);
+
+        // layout constraints for number buttons
+        GridBagConstraints n = new GridBagConstraints();
+        n.insets = new Insets(30,5,5,5);
+
         // add empty spaces
         for(int i = 1; i <= 9; i++){
             for(int k = 1; k <= 9; k++){
                 location.put(k,i);
-                createSpace(i,k,mainframe,pin,space);
+                createSpace(i,k,frame,pin,space);
             }
         }
 
         // add number selection buttons
         for(int i = 1; i <= 9; i++){
             nums.add(i);
-            createNumButton(i,mainframe,n,nums);
+            createNumButton(i,frame,n,nums);
         }
     }
 }

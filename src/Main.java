@@ -7,77 +7,32 @@ public class Main {
     // global variable
     public static Integer select;
 
-    // changes the user selected number
-    public static void setNum(int num){
-        select = num;
-        System.out.println("setNum was called");
-    }
+    public static void difficulty(JFrame frame){
+        JLabel message = new JLabel("Choose a Difficulty");
+        JButton easy = new JButton("Easy");
+        JButton medium = new JButton("Medium");
+        JButton hard = new JButton("Hard");
 
-    // retrieves the current user selected number
-    // public static int getNum(){
-    //     return select;
-    // }
+        frame.add(message);
+        frame.add(easy);
+        frame.add(medium);
+        frame.add(hard);
 
-    // makes the empty spaces of the game board
-    public static void createSpace(int i, int k, JFrame frame, GridBagConstraints pin, List<JButton> space){
-        pin.gridx = k;
-        pin.gridy = i;
-        //pin.ipadx = 50;
-        //pin.ipady = 70;
+        easy.addActionListener(e -> {
 
-        JButton button = new JButton();
-
-        space.add(button);
-        frame.add(button,pin);
-
-        // set size
-        Dimension size = new Dimension(80,80);
-        button.setPreferredSize(size);
-        button.setMinimumSize(size);
-        button.setMaximumSize(size);
-        // removes box around button text
-        button.setFocusPainted(false);
-        // makes button background transparent
-        button.setBackground(new Color(255,0,0,0));
-        // removes opaque background when the button is hovered
-        button.setOpaque(false);
-
-        button.addActionListener(event -> {
-            System.out.printf("x: %d, y: %d\n",k,i);
-            if(select == null){} // does nothing
-            else{
-                String numtext = Integer.toString(select);
-                button.setText(numtext);
-            }
         });
-    }
 
-    // creates the buttons that allow the user to pick a number
-    public static void createNumButton(int num, JFrame frame, GridBagConstraints n, List<Integer> nums){
-        n.gridx = num;
-        n.gridy = 10;
-        n.ipadx = 0;
-        n.ipady = 0;
+        medium.addActionListener(e -> {
 
-        JButton button = new JButton(String.format("%d",num));
-        frame.add(button,n);
-
-        // makes button background transparent
-        button.setBackground(new Color(255,0,0,0));
-        // removes opaque background when the button is hovered
-        button.setOpaque(false);
-        // removes button border
-        button.setBorderPainted(false);
-        // removes button text border
-        button.setFocusPainted(false);
-
-        button.addActionListener(e ->{
-            System.out.printf("button %d clicked\n",num);
-            setNum(num);
         });
+
+        hard.addActionListener(e -> {
+
+        });
+
     }
 
-    public static void solution(){
+    public static int[][][] solution(){
 
         Random random = new Random();
         int[][][] order = new int[9][3][3];
@@ -503,14 +458,78 @@ public class Main {
                 }
             }
         }
+        return order;
+    }
+
+    // changes the user selected number
+    public static void setNum(int num){
+        select = num;
+        System.out.println("setNum was called");
+    }
+
+    // makes the empty spaces of the game board
+    public static void createSpace(int i, int k, JFrame frame, GridBagConstraints pin, List<JButton> space){
+        pin.gridx = k;
+        pin.gridy = i;
+
+        JButton button = new JButton();
+
+        space.add(button);
+        frame.add(button,pin);
+
+        // set size
+        Dimension size = new Dimension(80,80);
+        button.setPreferredSize(size);
+        button.setMinimumSize(size);
+        button.setMaximumSize(size);
+        // removes box around button text
+        button.setFocusPainted(false);
+        // makes button background transparent
+        button.setBackground(new Color(255,0,0,0));
+        // removes opaque background when the button is hovered
+        button.setOpaque(false);
+
+        button.addActionListener(event -> {
+            System.out.printf("x: %d, y: %d\n",k,i);
+            if(select == null){} // does nothing
+            else{
+                String numtext = Integer.toString(select);
+                button.setText(numtext);
+            }
+        });
+    }
+
+    // creates the buttons that allow the user to pick a number
+    public static void createNumButton(int num, JFrame frame, GridBagConstraints n, List<Integer> nums){
+        n.gridx = num;
+        n.gridy = 10;
+        n.ipadx = 0;
+        n.ipady = 0;
+
+        JButton button = new JButton(String.format("%d",num));
+        frame.add(button,n);
+
+        // makes button background transparent
+        button.setBackground(new Color(255,0,0,0));
+        // removes opaque background when the button is hovered
+        button.setOpaque(false);
+        // removes button border
+        button.setBorderPainted(false);
+        // removes button text border
+        button.setFocusPainted(false);
+
+        button.addActionListener(e ->{
+            System.out.printf("button %d clicked\n",num);
+            setNum(num);
+        });
     }
 
     public static void main(String[] args){
-        solution();
         // lists
         HashMap<Integer,Integer> location = new HashMap<>(); // x,y coordinates
         List<JButton> space = new ArrayList<>(); // buttons
         List<Integer> nums = new ArrayList<>(); // numbers choices
+        Random random = new Random();
 
         // creating the main frame
         JFrame mainframe = new JFrame("Sudoku");
@@ -525,7 +544,6 @@ public class Main {
 
         // widgets set up
         JLabel intro = new JLabel("Sudoku");
-
         JButton start = new JButton("New Game");
 
         // add child widgets to parent frame
@@ -560,6 +578,20 @@ public class Main {
                     createSpace(i,k,mainframe,pin,space);
                 }
             }
+
+            int[][][] board = solution();
+            List<Integer> amount = new ArrayList<>(Arrays.asList(3,4,5));
+            // populate board
+            for(int z = 0; z <= 8; z++){
+                for(int y = 0; y <= 2; y++){
+                    for(int x = 0; x <= 2; x++){
+                        int num = board[z][y][x];
+                        int pick = random.nextInt(0,amount.size());
+
+                    }
+                }
+            }
+
 
             // layout constraints for number buttons
             GridBagConstraints n = new GridBagConstraints();
