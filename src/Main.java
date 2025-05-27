@@ -467,10 +467,46 @@ public class Main {
         System.out.println("setNum was called");
     }
 
+    public static void generate(){
+
+    }
+
+    public static int findz(int x, int y){
+        int z = 0;
+        if(x <= 2 ){
+            if(y <= 2){
+                z = 0;
+            }else if(y >= 3 && y <= 5){
+                z = 3;
+            }else if(y >= 6 && y <= 8){
+                z = 6;
+            }
+        }else if(x >= 3 && x <= 5){
+            if(y <= 2){
+                z = 1;
+            }else if(y >= 3 && y <= 5){
+                z = 4;
+            }else if(y >= 6 && y <= 8){
+                z = 7;
+            }
+        }else if(x >= 6 && x <= 8){
+            if(y <= 2){
+                z = 2;
+            }else if(y >= 3 && y <= 5){
+                z = 5;
+            }else if(y >= 6 && y <= 8){
+                z = 8;
+            }
+        }
+        return z;
+    }
+
     // makes the empty spaces of the game board
-    public static void createSpace(int i, int k, JFrame frame, GridBagConstraints pin, List<JButton> space){
-        pin.gridx = k;
-        pin.gridy = i;
+    public static void createSpace(int x, int y, JFrame frame, GridBagConstraints pin, List<JButton> space, List<Integer> zaxis){
+        pin.gridx = x;
+        pin.gridy = y;
+
+        int z = findz(x-1,y-1);
 
         JButton button = new JButton();
 
@@ -490,7 +526,7 @@ public class Main {
         button.setOpaque(false);
 
         button.addActionListener(event -> {
-            System.out.printf("x: %d, y: %d\n",k,i);
+            System.out.printf("x: %d, y: %d, z: %d\n",x,y,z+1);
             if(select == null){} // does nothing
             else{
                 String numtext = Integer.toString(select);
@@ -526,8 +562,9 @@ public class Main {
 
     public static void main(String[] args){
         // lists
-        HashMap<Integer,Integer> location = new HashMap<>(); // x,y coordinates
+        HashMap<Integer,Integer> location = new HashMap<>();// x,y coordinates
         List<JButton> space = new ArrayList<>(); // buttons
+        List<Integer> zaxis = new ArrayList<>(); //grid positions
         List<Integer> nums = new ArrayList<>(); // numbers choices
         Random random = new Random();
 
@@ -571,27 +608,16 @@ public class Main {
             GridBagConstraints pin = new GridBagConstraints();
             pin.insets = new Insets(0,0,0,0);
 
-            // add empty spaces
-            for(int i = 1; i <= 9; i++){
-                for(int k = 1; k <= 9; k++){
-                    location.put(k,i);
-                    createSpace(i,k,mainframe,pin,space);
-                }
-            }
-
             int[][][] board = solution();
-            List<Integer> amount = new ArrayList<>(Arrays.asList(3,4,5));
-            // populate board
-            for(int z = 0; z <= 8; z++){
-                for(int y = 0; y <= 2; y++){
-                    for(int x = 0; x <= 2; x++){
-                        int num = board[z][y][x];
-                        int pick = random.nextInt(0,amount.size());
+            List<Integer> amount = new ArrayList<>(Arrays.asList(4,5));
 
-                    }
+            // add empty spaces
+            for(int y = 1; y <= 9; y++){
+                for(int x = 1; x <= 9; x++){
+                    location.put(x,y);
+                    createSpace(x,y,mainframe,pin,space,zaxis);
                 }
             }
-
 
             // layout constraints for number buttons
             GridBagConstraints n = new GridBagConstraints();
