@@ -146,20 +146,21 @@ public class Main {
                             }
                         }
                     } else if(i==3){
-                        boolean check = false;
+                        int oldnum = 0;
                         outer:
                         for(int n = 0; n <= 8; n++){
                             int ranint = random.nextInt(0,nums.size());
                             int num = nums.get(ranint);
-                            if(check){
-                                n -= 1;
-                                check = false;
+                            if(num == oldnum){
+                                n-=1;
+                                continue;
                             }
                             if(num == order[0][0][k] || num == order[0][1][k] ||
                                     num == order[0][2][k])
                             {
                                 if(k == 0){
-                                    check = true;
+                                    n-=1;
+                                    oldnum = num;
                                     continue;
                                 }
                                 for(int b = 2; b >= 0; b--){
@@ -287,26 +288,28 @@ public class Main {
                                 for(int t = 2; t >= 0;t--){
                                     if(order[i][b][t] == 0){
                                         order[i][b][t] = nums.getLast();
+                                        nums.removeLast();
                                     }
                                 }
                             }
                         }
                     }else if(i==6){
-                        boolean check = false;
+                        int oldnum = 0;
                         outer:
                         for(int n = 0; n <= 8; n++){
                             int ranint = random.nextInt(0,nums.size());
                             int num = nums.get(ranint);
-                            if(check){
+                            if(oldnum == num){
                                 n -= 1;
-                                check = false;
+                                continue;
                             }
                             if(num == order[0][0][k] || num == order[0][1][k] ||
                                     num == order[0][2][k] || num == order[3][0][k] ||
                                     num == order[3][1][k] || num == order[3][2][k])
                             {
                                 if(k == 0){
-                                    check = true;
+                                    n-=1;
+                                    oldnum = num;
                                     continue;
                                 }
                                 for(int b = 2; b >= 0; b--){
@@ -445,13 +448,33 @@ public class Main {
                             }
                         }
                         if(j==2 && k==2 && !nums.isEmpty()){
-                            for(int b = 2; b >= 0; b--){
-                                for(int t = 2; t >= 0;t--){
+                            for(int b = 0; b <= 2; b++){
+                                for(int t = 0; t <= 0;t++){
                                     if(order[i][b][t] == 0){
                                         order[i][b][t] = nums.getFirst();
                                         nums.removeFirst();
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // final grid check
+        for(int y = 0; y <= 2; y++){
+            for(int x = 0; x <=2; x++){
+                if(order[8][y][x] == order[6][y][0] ||
+                        order[8][y][x] == order[6][y][1] || order[8][y][x] == order[6][y][2] ||
+                        order[8][y][x] == order[7][y][0] || order[8][y][x] == order[7][y][1] ||
+                        order[8][y][x] == order[7][y][2] || order[8][y][x] == order[2][0][x] ||
+                        order[8][y][x] == order[2][1][x] || order[8][y][x] == order[2][2][x] ||
+                        order[8][y][x] == order[5][0][x] || order[8][y][x] == order[5][1][x] ||
+                        order[8][y][x] == order[5][2][x]){
+                    for(int i = 2; i >= 0; i++){
+                        for(int j = 2; j >= 0; j++){
+                            if(order[8][i][j] == 2){
+                                // will continue;
                             }
                         }
                     }
@@ -469,6 +492,28 @@ public class Main {
 
     public static void generate(){
 
+    }
+
+    public static int convert_x(int x){
+        if(x == 1 || x == 4 || x == 7){
+            x = 0;
+        }else if(x == 2 || x == 5 || x == 8){
+            x = 1;
+        }else{
+            x = 2;
+        }
+        return x;
+    }
+
+    public static int convert_y(int y){
+        if(y == 1 || y == 4 || y == 7){
+            y = 0;
+        }else if(y == 2 || y == 5 || y == 8){
+            y = 1;
+        }else{
+            y = 2;
+        }
+        return y;
     }
 
     public static int findz(int x, int y){
@@ -502,14 +547,17 @@ public class Main {
     }
 
     // makes the empty spaces of the game board
-    public static void createSpace(int x, int y, JFrame frame, GridBagConstraints pin, List<JButton> space, List<Integer> zaxis){
+    public static void createSpace(int x, int y, JFrame frame, GridBagConstraints pin, List<JButton> space, List<Integer> zaxis, int[][][] solution){
         pin.gridx = x;
         pin.gridy = y;
 
         int z = findz(x-1,y-1);
+        int x2 = convert_x(x);
+        int y2 = convert_y(y);
 
         JButton button = new JButton();
 
+        zaxis.add(z);
         space.add(button);
         frame.add(button,pin);
 
@@ -524,6 +572,8 @@ public class Main {
         button.setBackground(new Color(255,0,0,0));
         // removes opaque background when the button is hovered
         button.setOpaque(false);
+        // test: add numbers to board
+        button.setText(String.valueOf(solution[z][y2][x2]));
 
         button.addActionListener(event -> {
             System.out.printf("x: %d, y: %d, z: %d\n",x,y,z+1);
@@ -615,7 +665,7 @@ public class Main {
             for(int y = 1; y <= 9; y++){
                 for(int x = 1; x <= 9; x++){
                     location.put(x,y);
-                    createSpace(x,y,mainframe,pin,space,zaxis);
+                    createSpace(x,y,mainframe,pin,space,zaxis,board);
                 }
             }
 
