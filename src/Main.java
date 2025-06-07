@@ -70,6 +70,7 @@ public class Main {
                                             {
                                                 order[i][j][k] = order[i][j-1][b];
                                                 order[i][j-1][b] = num;
+                                                nums.remove(ranint);
                                                 break outer;
                                             }
                                         }
@@ -286,9 +287,35 @@ public class Main {
                         if(j==2 && k==2 && !nums.isEmpty()){
                             for(int b = 2; b >= 0; b--){
                                 for(int t = 2; t >= 0;t--){
-                                    if(order[i][b][t] == 0){
-                                        order[i][b][t] = nums.getLast();
-                                        nums.removeLast();
+                                    if(order[i][b][t] == 0) {
+                                        if (order[i][b][t] != order[2][0][t] && order[i][b][t] != order[2][1][t] &&
+                                                order[i][b][t] != order[2][2][t] && order[i][b][t] != order[3][b][0] &&
+                                                order[i][b][t] != order[3][b][1] && order[i][b][t] != order[3][b][2] &&
+                                                order[i][b][t] != order[4][b][0] && order[i][b][t] != order[4][b][1] &&
+                                                order[i][b][t] != order[4][b][2]) {
+                                            order[i][b][t] = nums.getLast();
+                                            nums.removeLast();
+                                        } else {
+                                            for (int l = 0; l <= 0; l++) {
+                                                for (int m = 0; m <= 0; m++) {
+                                                    if (order[i][l][m] != order[2][0][t] && order[i][b][t] != order[2][1][t] &&
+                                                            order[i][b][t] != order[2][2][t] && order[i][b][t] != order[3][b][0] &&
+                                                            order[i][b][t] != order[3][b][1] && order[i][b][t] != order[3][b][2] &&
+                                                            order[i][b][t] != order[4][b][0] && order[i][b][t] != order[4][b][1] &&
+                                                            order[i][b][t] != order[4][b][2]) {
+                                                        if (order[i][b][t] != order[2][0][m] && order[i][b][t] != order[2][1][m] &&
+                                                                order[i][b][t] != order[2][2][m] && order[i][b][t] != order[3][l][0] &&
+                                                                order[i][b][t] != order[3][l][1] && order[i][b][t] != order[3][l][2] &&
+                                                                order[i][b][t] != order[4][l][0] && order[i][b][t] != order[4][l][1] &&
+                                                                order[i][b][t] != order[4][l][2]) {
+                                                            order[i][l][m] = order[i][b][t];
+                                                            order[i][b][t] = nums.getLast();
+                                                            nums.removeLast();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -390,8 +417,31 @@ public class Main {
                             for(int b = 2; b >= 0; b--){
                                 for(int t = 2; t >= 0;t--){
                                     if(order[i][b][t] == 0){
-                                        order[i][b][t] = nums.getLast();
-                                        nums.removeLast();
+                                        if(order[i][b][t] != order[1][0][t] && order[i][b][t] != order[1][1][t] &&
+                                                order[i][b][t] != order[1][2][t] && order[i][b][t] != order[4][0][t] && order[i][b][t] != order[4][1][t] &&
+                                                order[i][b][t] != order[4][2][t] && order[i][b][t] != order[6][b][0] &&
+                                                order[i][b][t] != order[6][b][1] && order[i][b][t] != order[6][b][2]){
+                                            order[i][b][t] = nums.getLast();
+                                            nums.removeLast();
+                                        }else{
+                                            for(int l = 0; l <= 0; l++) {
+                                                for (int m = 0; m <= 0; m++) {
+                                                    if(order[i][l][m] != order[1][0][t] && order[i][l][m] != order[1][1][t] &&
+                                                            order[i][l][m] != order[1][2][t] && order[i][l][m] != order[4][0][t] && order[i][l][m] != order[4][1][t] &&
+                                                            order[i][l][m] != order[4][2][t] && order[i][l][m] != order[6][b][0] &&
+                                                            order[i][l][m] != order[6][b][1] && order[i][l][m] != order[6][b][2]){
+                                                        if(order[i][b][t] != order[1][0][m] && order[i][b][t] != order[1][1][m] &&
+                                                                order[i][b][t] != order[1][2][m] && order[i][b][t] != order[4][0][m] && order[i][b][t] != order[4][1][m] &&
+                                                                order[i][b][t] != order[4][2][m] && order[i][b][t] != order[6][l][0] &&
+                                                                order[i][b][t] != order[6][l][1] && order[i][b][t] != order[6][l][2]){
+                                                            order[i][l][m] = order[i][b][t];
+                                                            order[i][b][t] = nums.getLast();
+                                                            nums.removeLast();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -448,11 +498,40 @@ public class Main {
                             }
                         }
                         if(j==2 && k==2 && !nums.isEmpty()){
-                            for(int b = 0; b <= 2; b++){
-                                for(int t = 0; t <= 0;t++){
+                            for(int b = 2; b >= 0; b--){
+                                for(int t = 2; t >= 0;t--){
                                     if(order[i][b][t] == 0){
-                                        order[i][b][t] = nums.getFirst();
-                                        nums.removeFirst();
+                                        if(order[i][b][t] != order[2][0][t] && order[i][b][t] != order[2][1][t] &&
+                                                order[i][b][t] != order[2][2][t] && order[i][b][t] != order[5][0][t] &&
+                                                order[i][b][t] != order[5][1][t] && order[i][b][t] != order[5][2][t] &&
+                                                order[i][b][t] != order[6][b][0] && order[i][b][t] != order[6][b][1] &&
+                                                order[i][b][t] != order[6][b][2] && order[i][b][t] != order[7][b][0] &&
+                                                order[i][b][t] != order[7][b][1] && order[i][b][t] != order[7][b][2]){
+                                            order[i][b][t] = nums.getFirst();
+                                            nums.removeFirst();
+                                        }else{
+                                            for(int l = 0; l <= 2; l++) {
+                                                for (int m = 0; m <= 2; m++) {
+                                                    if(order[i][l][m] != order[2][0][t] && order[i][l][m] != order[2][1][t] &&
+                                                            order[i][l][m] != order[2][2][t] && order[i][l][m] != order[5][0][t] &&
+                                                            order[i][l][m] != order[5][1][t] && order[i][l][m] != order[5][2][t] &&
+                                                            order[i][l][m] != order[6][b][0] && order[i][l][m] != order[6][b][1] &&
+                                                            order[i][l][m] != order[6][b][2] && order[i][l][m] != order[7][b][0] &&
+                                                            order[i][l][m] != order[7][b][1] && order[i][l][m] != order[7][b][2]){
+                                                        if(order[i][b][t] != order[2][0][m] && order[i][b][t] != order[2][1][m] &&
+                                                                order[i][b][t] != order[2][2][m] && order[i][b][t] != order[5][0][m] &&
+                                                                order[i][b][t] != order[5][1][m] && order[i][b][t] != order[5][2][m] &&
+                                                                order[i][b][t] != order[6][l][0] && order[i][b][t] != order[6][l][1] &&
+                                                                order[i][b][t] != order[6][l][2] && order[i][b][t] != order[7][l][0] &&
+                                                                order[i][b][t] != order[7][l][1] && order[i][b][t] != order[7][l][2]){
+                                                            order[i][l][m] = order[i][b][t];
+                                                            order[i][b][t] = nums.getLast();
+                                                            nums.removeLast();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -462,25 +541,33 @@ public class Main {
             }
         }
         // final grid check
-        for(int y = 0; y <= 2; y++){
-            for(int x = 0; x <=2; x++){
-                if(order[8][y][x] == order[6][y][0] ||
-                        order[8][y][x] == order[6][y][1] || order[8][y][x] == order[6][y][2] ||
-                        order[8][y][x] == order[7][y][0] || order[8][y][x] == order[7][y][1] ||
-                        order[8][y][x] == order[7][y][2] || order[8][y][x] == order[2][0][x] ||
-                        order[8][y][x] == order[2][1][x] || order[8][y][x] == order[2][2][x] ||
-                        order[8][y][x] == order[5][0][x] || order[8][y][x] == order[5][1][x] ||
-                        order[8][y][x] == order[5][2][x]){
-                    for(int i = 2; i >= 0; i++){
-                        for(int j = 2; j >= 0; j++){
-                            if(order[8][i][j] == 2){
-                                // will continue;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //for(int y = 0; y <= 2; y++){
+          //  for(int x = 0; x <=2; x++){
+            //    if(order[8][y][x] == order[6][y][0] ||
+              //          order[8][y][x] == order[6][y][1] || order[8][y][x] == order[6][y][2] ||
+                //        order[8][y][x] == order[7][y][0] || order[8][y][x] == order[7][y][1] ||
+                  //      order[8][y][x] == order[7][y][2] || order[8][y][x] == order[2][0][x] ||
+                    //    order[8][y][x] == order[2][1][x] || order[8][y][x] == order[2][2][x] ||
+                      //  order[8][y][x] == order[5][0][x] || order[8][y][x] == order[5][1][x] ||
+                        //order[8][y][x] == order[5][2][x]){
+                    //for(int i = 2; i >= 0; i++){
+                      //  for(int j = 2; j >= 0; j++){
+                        //    if(order[8][j][i] != order[8][y][x] && order[8][j][i] != order[6][y][0] &&
+                          //          order[8][y][x] != order[6][y][1] && order[8][y][x] != order[6][y][2] &&
+                            //        order[8][y][x] != order[7][y][0] && order[8][y][x] != order[7][y][1] &&
+                              //      order[8][y][x] != order[7][y][2] && order[8][y][x] != order[2][0][x] &&
+                                //    order[8][y][x] != order[2][1][x] && order[8][y][x] != order[2][2][x] &&
+                                  //  order[8][y][x] != order[5][0][x] && order[8][y][x] != order[5][1][x] &&
+                                    //order[8][y][x] != order[5][2][x]){
+                                //int swapnum = order[8][j][i];
+                                //order[8][j][i] = order[8][y][x];
+                                //order[8][y][x] = swapnum;
+                            //}
+                        //}
+                    //}
+                //}
+            //}
+        //}
         return order;
     }
 
