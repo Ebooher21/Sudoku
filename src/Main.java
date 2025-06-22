@@ -781,7 +781,7 @@ public class Main {
         // removes opaque background when the button is hovered
         button.setOpaque(false);
         // adjust border width
-        button.setBorder(SpaceBorder(z,y2,x2));
+        button.setBorder(SpaceBorder.getSpaceBorder(z,y2,x2));
 
         // test: add numbers to board
         button.setText(String.valueOf(solution[z][y2][x2]));
